@@ -13,5 +13,9 @@ security policy. Interoperability is intended via **IBC** when a compatible
 released IBC-Go pin exists. Until then, Domains operate independently without
 cross-chain asset movement.
 
+Client applications should use the public TypeScript SDK (`@ncgep/client`) with
+**explicit network manifests**. Wallet and explorer products are separate from
+protocol repositories and remain private prototypes during early client work.
+
 There is **no** Cosmos Hub ICS / shared security requirement in the current
 architecture.
