@@ -16,6 +16,7 @@ network topology, or secrets. Those remain in private repositories.
 - [Trust concepts](architecture/TRUST.md)
 - [Client SDK](architecture/CLIENT_SDK.md)
 - [Client quickstart](architecture/CLIENT_QUICKSTART.md)
+- [Privacy Domain (R&D)](architecture/PRIVACY_RD.md)
 
 ## Related repositories
 
