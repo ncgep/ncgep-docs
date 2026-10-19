@@ -1,15 +1,21 @@
 # Copias de NCGEP
 
-Criticidad: alta. El historial de bloques no se regenera desde git.
+Criticidad: alta. La cadena todavía no está lista para copiarse.
 
-## Método
+## Ahora
 
-No se copia `/srv/ncgep` en caliente. En eu-es-ion-01, `/etc/cron.d/ncgep-export` (domingo 05:10 UTC) para `ncgep-cored`, exporta y lo vuelve a arrancar. El JSON queda en `/var/backups/ncgep`. El script ya no llama a restic.
+Se copia solo la configuración de `cored`: `/srv/ncgep/main-v04/config` en eu-es-ion-01 y en eu-es-ion-02. Ahí están `config.toml`, `app.toml`, `client.toml` y las identidades del nodo. No entra `data/` ni `.ncgep/data`. El cron que paraba el nodo para exportar la cadena está retirado.
 
-La política `ncgep cored export` copia ese directorio cada día a las 05:40 UTC hacia el repositorio REST01 de ion-01.
+La política se llama `ncgep config`. El destino es el repositorio REST01 de cada VPS. rmm la ejecuta a las 05:40 UTC.
 
-eu-es-ion-02 tiene el mismo nodo y no tiene exportación. Su directorio de unos 7,5 GB no se copia en bruto. Si hace falta una exportación propia, es el mismo procedimiento y hay que dejar el nodo en marcha al terminar.
+## Más adelante
 
-## Verificación el 2026-10-19
+Cuando la cadena esté lista, la copia será una exportación periódica del tipo instantánea. La primera versión será completa. La incremental vendrá después. El procedimiento, todavía sin activar:
 
-Exportación `ncgep-main-20261019T074649Z.json`, 31394 bytes. El nodo volvió a `running`. Instantánea rmm `6cb473534c1c`. La restauración del directorio coincidió con el fichero vivo.
+1. Parar solo `ncgep-cored`.
+2. Exportar a un fichero nuevo bajo `/var/backups/ncgep`.
+3. Arrancar el nodo y comprobar que vuelve a `running`. Si no vuelve, no se da por buena la copia.
+4. Dejar el fichero para que restic lo recoja. No copiar `data/` en caliente.
+5. Conservar el nodo en marcha al terminar.
+
+Hasta que ese procedimiento se active, la exportación no forma parte de la copia.
